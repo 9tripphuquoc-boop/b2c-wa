@@ -1,16 +1,33 @@
 import { NextResponse } from 'next/server';
-import { adminDb } from '@/lib/firebase-admin';
+import { sendWelcomeEmail } from '@9trip/shared/email/service';
 
+/**
+ * POST /api/auth/welcome-email
+ * Sends a welcome email to a newly registered user.
+ * @param {Request} request
+ * @returns {Promise<NextResponse>}
+ * @updated 2026-05-23
+ */
 export async function POST(request) {
   try {
     const body = await request.json();
-    
-    if (!body.email || (!body.userName && !body.name)) {
-      return NextResponse.json({ success: false, message: "Missing email or userName" }, { status: 400 });
+    const { email, userName } = body;
+
+    if (!email) {
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true, message: "Welcome email sent" });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: error.message || "Internal server error" }, { status: 500 });
+    const result = await sendWelcomeEmail(email, userName);
+
+    if (result.success) {
+      console.log(`[Welcome Email] Sent to ${email}`);
+      return NextResponse.json({ success: true, messageId: result.messageId });
+    } else {
+      console.error(`[Welcome Email] Failed to send to ${email}:`, result.error);
+      return NextResponse.json({ error: result.error }, { status: 500 });
+    }
+  } catch (err) {
+    console.error('[Welcome Email] Error:', err.message);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

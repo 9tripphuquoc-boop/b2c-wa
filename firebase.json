@@ -1,87 +1,10 @@
 {
-  "hosting": {
-    "source": ".",
-    "ignore": ["firebase.json", "**/node_modules/**", "functions/",".github"],
-    "frameworksBackend": {
-      "region": "asia-southeast1",
-      "timeoutSeconds": 540,
-      "memory": "1GiB"
-    },
-    "rewrites": [
-      {
-        "source": "/api/bookings/**",
-        "function": "apiCore",
-        "region": "asia-southeast1"
-      },
-      {
-        "source": "/api/cart/**",
-        "function": "apiCore",
-        "region": "asia-southeast1"
-      },
-      {
-        "source": "/api/contact",
-        "function": "apiCore",
-        "region": "asia-southeast1"
-      },
-      {
-        "source": "/api/availability/**",
-        "function": "apiCore",
-        "region": "asia-southeast1"
-      },
-      {
-        "source": "/api/payments/**",
-        "function": "apiPayments",
-        "region": "asia-southeast1"
-      },
-      {
-        "source": "/api/webhooks/**",
-        "function": "apiWebhooks",
-        "region": "asia-southeast1"
-      },
-      {
-        "source": "/api/auth/**",
-        "function": "apiCore",
-        "region": "asia-southeast1"
-      },
-      {
-        "source": "/api/email/**",
-        "function": "apiCore",
-        "region": "asia-southeast1"
-      }
-    ],
-    "headers": [
-      {
-        "source": "/**",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=0, s-maxage=60, stale-while-revalidate=300"
-          }
-        ]
-      },
-      {
-        "source": "/_next/static/**",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-      }
-    ]
-  },
   "functions": [
     {
       "source": "functions",
       "codebase": "api",
       "disallowLegacyRuntimeConfig": true,
-      "ignore": ["firebase.json", "**/node_modules/**", ".github", ".next/dev/**",  ".git", "firebase-debug.log", "firebase-debug.*.log", ".agents/", ".codenomad/", ".opencode/", ".vscode/", ".report/", "specs/", "/.*/"],
-      "predeploy": [
-        "node scripts/predeploy.mjs"
-      ],
-      "postdeploy": [
-        "node scripts/postdeploy.mjs"
-      ]
+      "ignore": ["firebase.json", "**/node_modules/**", ".github", ".next/dev/**",  ".git", "firebase-debug.log", "firebase-debug.*.log", ".agents/", ".codenomad/", ".opencode/", ".vscode/", ".report/", "specs/", "/.*/"]
     }
   ]
 }

@@ -8,10 +8,11 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"deploy:hosting": "node scripts/deploy-hosting.mjs"
+		"apphosting:build": "pnpm install && pnpm build",
+		"apphosting:start": "pnpm start"
 	},
 	"dependencies": {
-		"@9trip/shared": "file:./vendor-shared",
+		"@9trip/shared": "workspace:*",
 		"@opentelemetry/api": "^1.9.1",
 		"dotenv": "^17.4.2",
 		"firebase": "^12.12.1",

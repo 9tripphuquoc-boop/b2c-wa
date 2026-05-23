@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	output: 'standalone',
 	reactCompiler: true,
 	// Keep firebase-admin as external — Turbopack on Cloud Run cannot resolve
 	// the hashed external chunk (firebase-admin-{hash}). See Cloud Run log:
